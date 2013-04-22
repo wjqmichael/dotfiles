@@ -750,5 +750,3 @@ if has("gui_running")
   endif
 endif
 :nohls
-
-" test
