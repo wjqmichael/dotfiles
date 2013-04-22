@@ -1,4 +1,5 @@
 "
+"
 " Derek Wyatt's Vim Configuration
 "
 " It's got stuff in it.
@@ -749,3 +750,5 @@ if has("gui_running")
   endif
 endif
 :nohls
+
+" test
