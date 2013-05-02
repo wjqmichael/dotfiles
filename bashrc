@@ -1,5 +1,3 @@
-
-
 # Compile
 alias g++='/opt/local/bin/g++-mp-4.8 -std=c++11 -I/Users/wjqmichael/mylib -L/Users/wjqmichael/mylib -ltinyxml'
 # -I/Users/wjqmichael/mylib/'
@@ -7,6 +5,9 @@ alias g++='/opt/local/bin/g++-mp-4.8 -std=c++11 -I/Users/wjqmichael/mylib -L/Use
 # ls colors
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
+
+# Aliases
+alias psef='ps -ef | grep'
 
 # Enable git commands autocompletion (when pressing tab key)
 source ~/dotfiles/git-completion.bash
