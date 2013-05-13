@@ -1,0 +1,44 @@
+############################### bashrc setup f r Appnexus #############################
+
+# temp commands
+alias rs='~/mine/schedulerd restart; ~/mine/workerd restart'
+
+# ssh commands
+alias jump='ssh -AY jwang@jump.nym1.adnxs.net'
+alias dev='ssh -AY devbox' 
+
+# sync commands
+alias sync='rsync -avz --delete -e ssh'
+
+# vertica commands
+alias vsql-prod='/opt/vertica/bin/vsql -h vertica-internal.prod.adnxs.net -U jwang -w AphonY05gooFah'
+alias vsql-test='/opt/vertica/bin/vsql -h 06.vertica.test01.nym1 -U jwang -w tyPIer^2undine'
+
+# mysql commands
+alias mysql-local='mysql -uroot jwang'
+
+alias mysql-prod='mysql --prompt "mysql-prod> " -ujwang -pyoiCk87waKens -hmysql-slave.prod.nym1.adnxs.net api'
+alias mysql-sand='mysql -A --prompt "mysql-sand> " -uapp_etl_opt -pTeWa2nDQx1Sw -hmysql-slave.sand-08.adnxs.net optimization'
+
+alias mysql-opt-master='mysql --prompt "mysql-opt-prod> " -ujwang -pyoiCk87waKens -h32.mysql.prod.nym1 optimization'
+alias mysql-opt='mysql --prompt "mysql-opt-slave> " -ujwang -pyoiCk87waKens -hmysql-opt-slave.prod.adnxs.net optimization'
+
+#alias mysql-budget-prod='mysql --prompt "mysql-budget-prod> " -ujwang -pyoiCk87waKens -hmysql-budget-master.prod.adnxs.net'
+alias mysql-budget-prod='mysql --prompt "mysql-budget-prod> " -ujwang -pJyl10841224 -hmysql-budget-master.prod.adnxs.net optimization'
+#alias mysql-budget='mysql --prompt "mysql-budget-slave> " -ujwang -pyoiCk87waKens -hmysql-budget-slave.prod.adnxs.net'
+alias mysql-budget='mysql --prompt "mysql-budget-slave> " -ujwang -pJyl10841224 -hmysql-budget-slave.prod.adnxs.net optimization'
+
+# Other commands
+# source profile
+alias psef='ps -ef | grep'
+
+# ls setup
+alias ls='ls -p'
+export CLICOLOR=1
+export LSCOLORS=ExFxCxDxBxegedabagacad
+
+# for vsql
+export ODBCINI=/usr/local/etc/odbc.ini
+export ODBCSYSINI=/usr/local/etc
+
+############################### End of setup for Appnexus #############################
