@@ -10,8 +10,17 @@ alias dev='ssh -AY devbox'
 # sync commands
 alias sync='rsync -avz --delete -e ssh'
 
-# vertica commands
+# Database variables
+vertica_path='/opt/vertica/bin/vsql'
+my_user_name='jwang'
+my_ldap_p='Jyl10841224'
+sand_user_name='app_etl_opt'
+sand_p_1='TeWa2nDQx1Sw'
+sand_p_2='san60pt'
+
+# vsql commands
 alias vsql-prod='/opt/vertica/bin/vsql -h vertica-internal.prod.adnxs.net -U jwang -w AphonY05gooFah'
+alias vsql-sand="$vertica_path -h vertica-primary.sand-08.adnxs.net -U $sand_user_name -w $sand_p_2"
 alias vsql-test='/opt/vertica/bin/vsql -h 06.vertica.test01.nym1 -U jwang -w tyPIer^2undine'
 
 # mysql commands
