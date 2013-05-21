@@ -1,39 +1,65 @@
 snippet #!
 	#!/usr/bin/env python
 
-snippet imp
-	import ${1:module}
-# Module Docstring
-snippet mod
-	'''
+# File in a module
+snippet file 
+	"""
 	${1:A short explanation of what caused these classes and functions to be grouped together}
-	'''
-	__author__ = "${2:Full Name} (`system("echo \"$(whoami)\"")`@appnexus.com)"
-snippet docs
-	'''
-	File: ${1:`Filename('$1.py', 'foo.py')`}
-	Author: ${2:`g:snips_author`}
-	Description: ${3}
-	'''
+	"""
+	__author__ = "Jiaqing WANG (`system("echo \"$(whoami)\"")`@appnexus.com)"
+
+# Module Docstring
+snippet init
+	"""
+	${1:Module name}
+
+	${2:Description of what the module does.}
+
+	Requires Python: ${3:Minimum Python requirement.}
+
+	Changelog:
+		`system("date +%Y-%m-%d")`, Jiaqing, ${4:Description of change}
+	"""
+	__author__ = "Jiaqing WANG (`system("echo \"$(whoami)\"")`@appnexus.com)"
+	__version__ = "${5:0.0.0}"
+	${6}
+
 snippet wh
 	while ${1:condition}:
 		${2:# code...}
 snippet for
 	for ${1:needle} in ${2:haystack}:
 		${3:# code...}
+
 # New Class
 snippet cl
 	class ${1:ClassName}(${2:object}):
-		"""${3:docstring for $1}"""
-		def __init__(self, ${4:arg}):
-			${5:super($1, self).__init__()}
-			self.$4 = $4
-			${6}
+		"""
+		${3:docstring for $1}
+
+		Attributes:
+		${4:List attributes with descriptions}
+		"""
+		def __init__(self, ${5:arg}):
+			${6:super($1, self).__init__()}
+			self.$5 = $5
+			${7}
 # New Function
 snippet def
 	def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
-		"""${3:docstring for $1}"""
-		${4:pass}
+		"""${3:docstring for $1}
+	
+		Args:
+			${4:<arg>:description}
+
+		Returns:
+			${5:None}
+	
+		Raises:
+			${6:None}
+		"""
+		${7:pass}
+
 snippet deff
 	def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
 		${3}
@@ -83,7 +109,7 @@ snippet try Try/Except/Else/Finally
 	finally:
 		${6:pass}
 # if __name__ == '__main__':
-snippet ifmain
+snippet main
 	if __name__ == '__main__':
 		${1:main()}
 # __magic__
