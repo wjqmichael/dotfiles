@@ -1,8 +1,11 @@
 ############################### bashrc setup f r Appnexus #############################
 
 # temp commands
-alias rs='~/mine/schedulerd restart; ~/mine/workerd restart'
+alias rs='~/my_bin/schedulerd restart; ~/my_bin/workerd restart'
 alias view-logs='sudo tail -300f /var/log/messages'
+alias send='python ~/my_bin/sender.py'
+alias quality_analyzer='~/my_bin/quality_analyzer.sh'
+alias mount='sshfs jwang@64.210.63.215:/home/jwang ~/dev'
 
 # ssh commands
 alias jump='ssh -AY jwang@jump.nym1.adnxs.net'
