@@ -31,7 +31,7 @@ alias vsql-test='/opt/vertica/bin/vsql -h 06.vertica.test01.nym1 -U jwang -w tyP
 # mysql commands
 alias mysql-local='mysql -uroot jwang'
 
-alias mysql-prod='mysql --prompt "mysql-prod> " -ujwang -pyoiCk87waKens -hmysql-slave.prod.nym1.adnxs.net api'
+alias mysql-prod='mysql --prompt "mysql-prod> " -u$my_un -p$my_pw -hmysql-slave.prod.nym1.adnxs.net api'
 alias mysql-sand='mysql -A --prompt "mysql-sand> " -uapp_etl_opt -pTeWa2nDQx1Sw -hmysql-slave.sand-08.adnxs.net optimization'
 
 alias mysql-opt-master='mysql --prompt "mysql-opt-prod> " -ujwang -pyoiCk87waKens -h32.mysql.prod.nym1 optimization'
@@ -44,7 +44,7 @@ alias mysql-budget='mysql --prompt "mysql-budget-slave> " -ujwang -pJyl10841224 
 
 # Other commands
 # source profile
-alias psef='ps -ef | grep'
+alias psaux='ps -aux | grep'
 
 # ls and prompt setup
 alias ls='ls -p'
@@ -58,5 +58,9 @@ export ODBCSYSINI=/usr/local/etc
 
 # python
 alias pep8='~/dotfiles/pep8.py'
+
+# path shortcut
+hadoop='/opt/local/share/java/hadoop-1.1.1/'
+python_lib='/opt/python27/lib/python2.7'
 
 ############################### End of setup for Appnexus #############################
