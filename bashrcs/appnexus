@@ -61,6 +61,6 @@ alias pep8='~/dotfiles/pep8.py'
 
 # path shortcut
 hadoop='/opt/local/share/java/hadoop-1.1.1/'
-python_lib='/opt/python27/lib/python2.7'
+python_lib='/opt/python27/lib/python2.7/'
 
 ############################### End of setup for Appnexus #############################
