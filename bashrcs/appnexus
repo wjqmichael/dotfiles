@@ -36,7 +36,7 @@ alias mysql-sand='mysql -A --prompt "mysql-sand> " -uapp_etl_opt -pTeWa2nDQx1Sw 
 
 alias mysql-opt-master='mysql --prompt "mysql-opt-prod> " -ujwang -pyoiCk87waKens -h32.mysql.prod.nym1 optimization'
 alias mysql-opt='mysql --prompt "mysql-opt-slave> " -ujwang -pyoiCk87waKens -hmysql-opt-slave.prod.adnxs.net optimization'
-
+alias mysql-icq-metrics='mysql --prompt "mysql-icq-metrics> " -u$my_un -p$my_pw -hmysql-icq-metrics-master.prod.adnxs.net icq_metrics'
 #alias mysql-budget-prod='mysql --prompt "mysql-budget-prod> " -ujwang -pyoiCk87waKens -hmysql-budget-master.prod.adnxs.net'
 alias mysql-budget-prod='mysql --prompt "mysql-budget-prod> " -ujwang -pJyl10841224 -hmysql-budget-master.prod.adnxs.net optimization'
 #alias mysql-budget='mysql --prompt "mysql-budget-slave> " -ujwang -pyoiCk87waKens -hmysql-budget-slave.prod.adnxs.net'
@@ -59,6 +59,7 @@ export ODBCSYSINI=/usr/local/etc
 
 # python
 alias pep8='~/dotfiles/pep8.py'
+alias fraud-report='python /home/jwang/inv-quality/fraud_report/main.py --conf="/home/jwang/configs/inv-quality/fraud_report/main.conf" --verbose'
 
 # path shortcut
 hadoop='/opt/local/share/java/hadoop-1.1.1/'
