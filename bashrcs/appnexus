@@ -58,8 +58,11 @@ export ODBCINI=/usr/local/etc/odbc.ini
 export ODBCSYSINI=/usr/local/etc
 
 # python
+alias python='/usr/bin/python2.7'
 alias pep8='~/dotfiles/pep8.py'
 alias fraud-report='python /home/jwang/inv-quality/fraud_report/main.py --conf="/home/jwang/configs/inv-quality/fraud_report/main.conf" --verbose'
+declare -x ODBCINI="/etc/odbcinst.ini"
+declare -x ODBCSYSINI="/etc"
 
 # path shortcut
 hadoop='/opt/local/share/java/hadoop-1.1.1/'
