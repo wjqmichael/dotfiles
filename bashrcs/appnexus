@@ -7,6 +7,9 @@ alias send='python ~/my_bin/sender.py'
 alias quality_analyzer='~/my_bin/quality_analyzer.sh'
 alias mount-dev='sshfs jwang@64.210.63.215:/home/jwang ~/dev'
 
+# fraud service
+export FRAUD_SERVICE_DB_ENGINE='sqlite:////tmp/test.db' 
+
 # ssh commands
 alias jump='ssh -AY jwang@jump.nym1.adnxs.net'
 alias dev='ssh -AY devbox' 
