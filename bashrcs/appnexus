@@ -64,7 +64,7 @@ export ODBCSYSINI=/usr/local/etc
 alias python='/usr/bin/python2.7'
 alias pep8='~/dotfiles/pep8.py'
 alias fraud-report='python /home/jwang/inv-quality/fraud_report/main.py --conf="/home/jwang/configs/inv-quality/fraud_report/main.conf" --verbose'
-alias gitpush = 'git push origin HEAD:refs/for/master'
+alias gitpush='git push origin HEAD:refs/for/master'
 declare -x ODBCINI="/etc/odbcinst.ini"
 declare -x ODBCSYSINI="/etc"
 
