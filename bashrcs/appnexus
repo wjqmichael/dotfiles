@@ -2,6 +2,7 @@
 
 # temp commands
 alias rs='~/my_bin/schedulerd restart; ~/my_bin/workerd restart'
+alias rs-fraud='~/my_bin/fraudsvcd restart'
 alias view-logs='sudo tail -300f /var/log/messages'
 alias send='python ~/my_bin/sender.py'
 alias quality_analyzer='~/my_bin/quality_analyzer.sh'
