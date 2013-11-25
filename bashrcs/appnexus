@@ -32,12 +32,14 @@ alias vsql-prod='/opt/vertica/bin/vsql -h vertica-internal.prod.adnxs.net -U jwa
 alias vsql-sand="$vertica_path -h vertica-primary.sand-08.adnxs.net -U $sand_un_1 -w $sand_p_2"
 alias vsql-test='/opt/vertica/bin/vsql -h 06.vertica.test01.nym1 -U jwang -w tyPIer^2undine'
 
+# psql commands
+alias psql-prod='psql -h 01.postgresql.prod.nym1 -U fraud_rw fraud_engineering'
+alias psql-sand='psql -h 01.postgresql.sand-08.nym1 -U fraud_rw fraud_engineering'
+
 # mysql commands
 alias mysql-local='mysql -uroot jwang'
-
 alias mysql-prod='mysql --prompt "mysql-prod> " -u$my_un -p$my_pw -hmysql-slave.prod.nym1.adnxs.net api'
 alias mysql-sand='mysql -A --prompt "mysql-sand> " -uapp_etl_opt -pTeWa2nDQx1Sw -hmysql-slave.sand-08.adnxs.net optimization'
-
 alias mysql-opt-master='mysql --prompt "mysql-opt-prod> " -ujwang -pyoiCk87waKens -h32.mysql.prod.nym1 optimization'
 alias mysql-opt='mysql --prompt "mysql-opt-slave> " -ujwang -pyoiCk87waKens -hmysql-opt-slave.prod.adnxs.net optimization'
 alias mysql-icq-metrics='mysql --prompt "mysql-icq-metrics> " -u$my_un -p$my_pw -hmysql-icq-metrics-master.prod.adnxs.net icq_metrics'
