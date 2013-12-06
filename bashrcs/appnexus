@@ -1,11 +1,10 @@
-############################### bashrc setup f r Appnexus #############################
+############################### bash_profile setup for Appnexus #############################
 
 # temp commands
-alias rs='~/my_bin/schedulerd restart; ~/my_bin/workerd restart'
-alias rs-fraud='sudo ~/my_bin/fraudsvcd restart'
+alias rs-work-queue='~/my_bin/schedulerd restart; ~/my_bin/workerd restart'
+alias rs-fraudsvc='sudo ~/my_bin/fraudsvcd restart'
 alias view-logs='sudo tail -300f /var/log/messages'
 alias send='python ~/my_bin/sender.py'
-alias quality_analyzer='~/my_bin/quality_analyzer.sh'
 alias mount-dev='sshfs jwang@64.210.63.215:/home/jwang ~/dev'
 
 # fraud service
@@ -74,5 +73,71 @@ declare -x ODBCSYSINI="/etc"
 # path shortcut
 hadoop='/opt/local/share/java/hadoop-1.1.1/'
 python_lib='/opt/python27/lib/python2.7/'
+
+############################ CURL TOOL ###############################
+AUTHDIR=/home/jwang/.appnexus_api_wrapper
+VERBOSE=1
+
+SAND="sand"
+PROD="prod"
+STAGE="stage"
+
+FRAUD_LOCAL="fraud-local"
+FRAUD_LOCAL_COOKIE="/home/jwang/.appnexus_api_wrapper/fraud_local_cookie"
+FRAUD_LOCAL_URL="localhost:5000/"
+
+FRAUD_PROD="fraud-prod"
+FRAUD_LOCAL_COOKIE="/home/jwang/.appnexus_api_wrapper/fraud_prod_cookie"
+FRAUD_LOCAL_URL="http://inv-quality.adnxs.net:5001/"
+
+function chelp() {
+    echo ""
+    echo "The available commands are:"
+    echo "    auth(service-type)"
+    echo "    switchto(user)"
+    echo "    curlget(target)"
+    echo "    meta(service)"
+    echo "    curlput(target, json)"
+    echo "    curlputfile(target, json filename)"
+    echo "    curlpost(target, json)"
+    echo "    curlpostfile(target, json filename)"
+    echo ""
+    echo "The service-types are:"
+    echo "    api-prod"
+    echo "    console-prod"
+    echo "    api-sand"
+    echo "    console-sand"    
+    echo "    fraud-local
+    echo "    fraud-dev
+    echo "    fraud-sand
+    echo "    fraud-prod
+    echo ""
+}
+
+function auth() {
+    if which json_rs >/dev/null; then
+        JSON_PRINT=" | json_rs"
+    JSON_PRINT=""
+    fi
+
+    if [ "$1" == "$FRAUD_PROD" ]; then
+        CURR_COOKIE=$FRAUD_PROD_COOKIE
+        CURR_URL=$FRAUD_PROD_URL
+        CURR_CONN="fraud-prod"
+    CURR_AUTH_FILE=fraud_authfile
+    elif [ "$1" == "$FRAUD_LOCAL" ]; then
+        CURR_COOKIE=$FRAUD_LOCAL_COOKIE
+        CURR_URL=$FRAUD_LOCAL_URL
+        CURR_CONN="fraud-local"
+    CURR_AUTH_FILE=fraud_authfile
+    else
+        echo "The proper usage is auth [fraud-prod/fraud-sand/fraud-local]"
+    fi
+
+    eval "curl -s -b $CURR_COOKIE -c $CURR_COOKIE -X POST -H 'Content-Type:application/json' --data-binary @${AUTHDIR}${CURR_AUTH_FILE} \"${CURR_URL}auth\" $JSON_PRINT"
+}
+
+
+######################## END OF CURL TOOL ############################
 
 ############################### End of setup for Appnexus #############################
