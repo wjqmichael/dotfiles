@@ -3,6 +3,7 @@
 # temp commands
 alias rs-work-queue='~/my_bin/schedulerd restart; ~/my_bin/workerd restart'
 alias rs-fraudsvc='sudo ~/my_bin/fraudsvcd restart'
+alias runserver='python /home/jwang/inv-quality/fraud_service/runserver.py --conf=/home/jwang/configs/inv-quality/fraud_service.conf'
 alias view-logs='sudo tail -300f /var/log/messages'
 alias send='python ~/my_bin/sender.py'
 alias mount-dev='sshfs jwang@64.210.63.215:/home/jwang ~/dev'
@@ -75,65 +76,125 @@ hadoop='/opt/local/share/java/hadoop-1.1.1/'
 python_lib='/opt/python27/lib/python2.7/'
 
 ############################ CURL TOOL ###############################
-AUTHDIR=/home/jwang/.appnexus_api_wrapper
+AUTHDIR="/home/jwang/.appnexus_api_wrapper/"
 VERBOSE=1
 
-SAND="sand"
-PROD="prod"
-STAGE="stage"
-
 FRAUD_LOCAL="fraud-local"
-FRAUD_LOCAL_COOKIE=${AUTHDIR}/fraud_local_cookie
+FRAUD_LOCAL_COOKIE=${AUTHDIR}fraud_local_cookie
 FRAUD_LOCAL_URL="localhost:5000/"
 FRAUD_LOCAL_AUTH=fraud_authfile
 
+FRAUD_DEV="fraud-dev"
+FRAUD_DEV_COOKIE=${AUTHDIR}fraud_dev_cookie
+FRAUD_DEV_URL="13.jwang.dev.lax1:80/"
+FRAUD_DEV_AUTH=fraud_authfile
+
 FRAUD_PROD="fraud-prod"
-FRAUD_PROD_COOKIE=${AUTHDIR}/fraud_prod_cookie
+FRAUD_PROD_COOKIE=${AUTHDIR}fraud_prod_cookie
 FRAUD_PROD_URL="http://inv-quality.adnxs.net:5001/"
 FRAUD_PROD_AUTH=fraud_authfile
+
+API_PROD="api-prod"
+API_PROD_COOKIE=${AUTHDIR}api_prod_cookie
+API_PROD_URL="http://api.adnxs.com/"
+API_PROD_AUTH=api_authfile
+
+API_SAND="api-sand"
+API_SAND_COOKIE=${AUTHDIR}api_sand_cookie
+API_SAND_URL="http://api.sand-08.adnxs.net/"
+API_SAND_AUTH=api_authfile
 
 function chelp() {
     echo ""
     echo "The available commands are:"
     echo "    auth(service-type)"
-    echo "    switchto(user)"
     echo "    curlget(target)"
-    echo "    meta(service)"
     echo "    curlput(target, json)"
-    echo "    curlputfile(target, json filename)"
     echo "    curlpost(target, json)"
-    echo "    curlpostfile(target, json filename)"
     echo ""
     echo "The service-types are:"
+    echo "    fraud-local"
+    echo "    fraud-dev"
+    echo "    fraud-prod"
     echo "    api-prod"
-    echo "    console-prod"
     echo "    api-sand"
-    echo "    console-sand"    
-    echo "    fraud-local
-    echo "    fraud-dev
-    echo "    fraud-sand
-    echo "    fraud-prod
     echo ""
 }
 
 function auth() {
-    JSON_PRINT=" | json_xs"
-
     if [ "$1" == "$FRAUD_PROD" ]; then
         CURR_COOKIE=$FRAUD_PROD_COOKIE
         CURR_URL=$FRAUD_PROD_URL
         CURR_CONN="fraud-prod"
-    CURR_AUTH_FILE=$FRAUD_PROD_AUTH
+        CURR_AUTH_FILE=$FRAUD_PROD_AUTH
     elif [ "$1" == "$FRAUD_LOCAL" ]; then
         CURR_COOKIE=$FRAUD_LOCAL_COOKIE
         CURR_URL=$FRAUD_LOCAL_URL
         CURR_CONN="fraud-local"
-    CURR_AUTH_FILE=$FRAUD_LOCAL_AUTH
+        CURR_AUTH_FILE=$FRAUD_LOCAL_AUTH
+    elif [ "$1" == "$FRAUD_DEV" ]; then
+        CURR_COOKIE=$FRAUD_DEV_COOKIE
+        CURR_URL=$FRAUD_DEV_URL
+        CURR_CONN="fraud-dev"
+        CURR_AUTH_FILE=$FRAUD_DEV_AUTH
+    elif [ "$1" == "$API_PROD" ]; then
+        CURR_COOKIE=$API_PROD_COOKIE
+        CURR_URL=$API_PROD_URL
+        CURR_CONN="api-prod"
+        CURR_AUTH_FILE=$API_PROD_AUTH
+    elif [ "$1" == "$API_SAND" ]; then
+        CURR_COOKIE=$API_SAND_COOKIE
+        CURR_URL=$API_SAND_URL
+        CURR_CONN="api-sand"
+        CURR_AUTH_FILE=$API_SAND_AUTH
     else
-        echo "The proper usage is auth [fraud-prod/fraud-sand/fraud-local]"
+        echo "The proper usage is auth [fraud-prod/fraud-dev/fraud-local/api-prod/api-sand]"
     fi
 
-    eval "curl -b $CURR_COOKIE -c $CURR_COOKIE -X POST -H 'Content-Type:application/json' --data-binary @${AUTHDIR}${CURR_AUTH_FILE} \"${CURR_URL}auth\" $JSON_PRINT"
+    CMD="curl -s -b $CURR_COOKIE -c $CURR_COOKIE -X POST -H 'Content-Type:application/json' --data-binary @${AUTHDIR}${CURR_AUTH_FILE} \"${CURR_URL}auth\""
+
+    if [ $VERBOSE -gt 0 ]
+    then
+        echo "Using: ${CMD}"
+    fi
+    eval "${CMD}"
+}
+
+function curlget() {
+    CMD="curl -X GET -b $CURR_COOKIE -c $CURR_COOKIE"
+    if [ $# -gt 1 ]; then
+        CMD="$CMD -d '${2}'"
+    fi
+    CMD="$CMD \"${CURR_URL}${1}\""
+    
+    if [ $VERBOSE -gt 0 ]
+    then
+        echo "Using: ${CMD}"
+    fi
+    eval "${CMD}"
+}
+
+function curlput() {
+    CMD="curl -s -b $CURR_COOKIE -c $CURR_COOKIE -X PUT -d '${2}' \"${CURR_URL}${1}\""
+    if [ $VERBOSE -gt 0 ]; then
+       echo "Using: ${CMD}"
+    fi
+    eval "${CMD}"
+}
+
+function curlpost() {
+    CMD="curl -s -b $CURR_COOKIE -c $CURR_COOKIE -X POST -H 'Content-Type:application/json' -d '${2}' \"${CURR_URL}${1}\""
+    if [ $VERBOSE -gt 0 ]; then
+       echo "Using: ${CMD}"
+    fi
+    eval "${CMD}"
+}
+
+function pub_test(){
+    for MEMBER_TAG in $(mysql-prod -Nse "select id, member_id from api.publisher where id in ($@)" | sed "s/\t/\?member_id\=/")
+    do
+        echo "$MEMBER_TAG"
+    done
 }
 
 
