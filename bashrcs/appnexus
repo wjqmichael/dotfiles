@@ -3,7 +3,7 @@
 # temp commands
 alias rs-work-queue='~/my_bin/schedulerd restart; ~/my_bin/workerd restart'
 alias rs-fraudsvc='sudo ~/my_bin/fraudsvcd restart'
-alias runserver='python /home/jwang/inv-quality/fraud_service/runserver.py --conf=/home/jwang/configs/inv-quality/fraud_service.conf'
+alias runserver='python /home/jwang/inv-quality/fraud_service/runserver.py --conf=/home/jwang/my_bin/fraud_service.conf'
 alias view-logs='sudo tail -300f /var/log/messages'
 alias send='python ~/my_bin/sender.py'
 alias mount-dev='sshfs jwang@64.210.63.215:/home/jwang ~/dev'
