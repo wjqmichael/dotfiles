@@ -34,8 +34,8 @@ alias vsql-sand="$vertica_path -h vertica-primary.sand-08.adnxs.net -U $sand_un_
 alias vsql-test='/opt/vertica/bin/vsql -h 06.vertica.test01.nym1 -U jwang -w tyPIer^2undine'
 
 # psql commands
-alias psql-prod='psql -h 01.postgresql.prod.nym1 -U fraud_rw fraud_engineering'
-alias psql-sand='psql -h 01.postgresql.sand-08.nym1 -U fraud_rw fraud_engineering'
+alias psql-prod='psql -h pg-general-services-master.prod.adnxs.net -U fraud_rw fraud_engineering'
+alias psql-sand='psql -h pg-general-services-master.sand-08.adnxs.net  -U fraud_rw fraud_engineering'
 
 # mysql commands
 alias mysql-local='mysql -uroot jwang'
