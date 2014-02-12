@@ -1,7 +1,7 @@
 ############################### bash_profile setup for Appnexus #############################
 
 # temp commands
-alias rs-work-queue='~/my_bin/schedulerd restart; ~/my_bin/workerd restart'
+alias rs-work-queue='sudo ~/my_bin/schedulerd restart; sudo ~/my_bin/workerd restart'
 alias rs-fraudsvc='sudo ~/my_bin/fraudsvcd restart'
 
 alias runserver='python /home/jwang/inv-quality/fraud_service/runserver.py --conf=/home/jwang/my_bin/fraud_service.conf'
