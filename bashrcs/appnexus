@@ -10,7 +10,7 @@ alias send='python ~/my_bin/sender.py'
 alias mount-dev='sshfs jwang@64.210.63.215:/home/jwang ~/dev'
 
 # fraud service
-export FRAUD_SERVICE_DB_ENGINE='sqlite:////tmp/test.db' 
+alias gen_config='validate_config env=dev work_queue_user_prefix=`whoami`_ hostname=`hostname`'
 
 # ssh commands
 alias jump='ssh -AY jwang@jump.nym1.adnxs.net'
