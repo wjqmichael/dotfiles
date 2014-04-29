@@ -34,7 +34,7 @@ boost=/opt/local/include
 
 export workspace
 export CPLUS_INCLUDE_PATH
-export PYTHONPATH=/Users/jwang/workspace/library
+export PYTHONPATH=/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages:/Users/jwang/workspace/library
 # Notes: ----------------------------------------------------------
 # When you start an interactive shell (log in, open terminal or iTerm in OS X, 
 # or create a new tab in iTerm) the following files are read and run, in this order:

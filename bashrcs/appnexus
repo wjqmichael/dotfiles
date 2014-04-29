@@ -1,13 +1,17 @@
 ############################### bash_profile setup for Appnexus #############################
 
+alias mount-dev='sshfs jwang@64.210.63.215:/home/jwang ~/dev'
+
 # temp commands
 alias rs-work-queue='sudo ~/my_bin/schedulerd restart; sudo ~/my_bin/workerd restart'
 alias rs-fraudsvc='sudo ~/my_bin/fraudsvcd restart'
 
-alias runserver='python /home/jwang/inv-quality/fraud_service/runserver.py --conf=/home/jwang/my_bin/fraud_service.conf'
+# alias run-server='python /home/jwang/inv-quality/fraud_service/runserver.py --conf=/home/jwang/my_bin/fraud_service.conf'
+alias run-server='python /home/jwang/inv-quality/fraud_service/blacklist_api/runserver.py'
 alias view-logs='sudo tail -300f /var/log/messages'
 alias send='python ~/my_bin/sender.py'
-alias mount-dev='sshfs jwang@64.210.63.215:/home/jwang ~/dev'
+alias run-celery='celery -A fraud.tasks worker --loglevel=info'
+
 
 # fraud service
 alias gen_config='validate_config env=dev work_queue_user_prefix=`whoami`_ hostname=`hostname`'
@@ -58,7 +62,7 @@ alias ls='ls -p'
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
 export PS1='\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\]$(git branch &>/dev/null; if [ $? -eq 0 ]; then echo "\[\033[01;33m\]($(git branch | grep ^*|sed s/\*\ //))\[\033[00m\]"; fi)$ '
-export PYTHONPATH=/home/jwang/inv-quality
+export PYTHONPATH=/home/jwang/inv-quality/blacklist_api:/home/jwang/inv-quality
 
 # for vsql
 export ODBCINI=/usr/local/etc/odbc.ini
@@ -104,7 +108,7 @@ API_PROD_AUTH=api_authfile
 API_SAND="api-sand"
 API_SAND_COOKIE=${AUTHDIR}api_sand_cookie
 API_SAND_URL="http://api.sand-08.adnxs.net/"
-API_SAND_AUTH=api_authfile
+API_SAND_AUTH=api_sand_authfile
 
 function chelp() {
     echo ""
