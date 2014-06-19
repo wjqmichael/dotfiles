@@ -10,8 +10,8 @@ alias rs-fraudsvc='sudo ~/my_bin/fraudsvcd restart'
 alias run-server='python /home/jwang/inv-quality/fraud_service/blacklist_api/runserver.py'
 alias view-logs='sudo tail -300f /var/log/messages'
 alias send='python ~/my_bin/sender.py'
-alias run-celery='celery -A fraud.tasks worker --loglevel=info'
-
+alias run-celery='celery -A blacklist.async_tasks worker --loglevel=info -B'
+alias run-celery-flower='celery flower --broker=amqp://03.rabbitmq.sand-08.nym2'
 
 # fraud service
 alias gen_config='validate_config env=dev work_queue_user_prefix=`whoami`_ hostname=`hostname`'
@@ -60,9 +60,8 @@ alias psaux='ps -aux | grep'
 # ls and prompt setup
 alias ls='ls -p'
 export CLICOLOR=1
-export LSCOLORS=ExFxCxDxBxegedabagacad
-export PS1='\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[01;34m\]\w\[\033[00m\]$(git branch &>/dev/null; if [ $? -eq 0 ]; then echo "\[\033[01;33m\]($(git branch | grep ^*|sed s/\*\ //))\[\033[00m\]"; fi)$ '
-export PYTHONPATH=/home/jwang/inv-quality/blacklist_api:/home/jwang/inv-quality
+export LS_COLORS='no=00:fi=00:di=00;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:';
+export PS1='\[\033[01;32m\]\u@\h\[\033[00m\] \[\033[0;32m\]\w\[\033[00m\]$(git branch &>/dev/null; if [ $? -eq 0 ]; then echo "\[\033[0;36m\]($(git branch | grep ^*|sed s/\*\ //))\[\033[00m\]"; fi)$ '
 
 # for vsql
 export ODBCINI=/usr/local/etc/odbc.ini
@@ -76,6 +75,8 @@ alias gitpush='git push origin HEAD:refs/for/master'
 alias gitlog='git log --pretty=format:"%cr %h %s" --graph'
 declare -x ODBCINI="/etc/odbcinst.ini"
 declare -x ODBCSYSINI="/etc"
+export PYTHONPATH=/home/jwang/inv-quality:/home/jwang/inv-quality/blacklist_api
+
 
 # path shortcut
 hadoop='/opt/local/share/java/hadoop-1.1.1/'
@@ -97,7 +98,7 @@ FRAUD_DEV_AUTH=fraud_authfile
 
 FRAUD_PROD="fraud-prod"
 FRAUD_PROD_COOKIE=${AUTHDIR}fraud_prod_cookie
-FRAUD_PROD_URL="http://inv-quality.adnxs.net:5001/"
+FRAUD_PROD_URL="http://inv-quality.adnxs.net:5000/"
 FRAUD_PROD_AUTH=fraud_authfile
 
 API_PROD="api-prod"
@@ -194,13 +195,6 @@ function curlpost() {
        echo "Using: ${CMD}"
     fi
     eval "${CMD}"
-}
-
-function pub_test(){
-    for MEMBER_TAG in $(mysql-prod -Nse "select id, member_id from api.publisher where id in ($@)" | sed "s/\t/\?member_id\=/")
-    do
-        echo "$MEMBER_TAG"
-    done
 }
 
 
